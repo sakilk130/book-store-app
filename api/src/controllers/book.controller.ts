@@ -69,6 +69,15 @@ const deleteBook = async (req: Request, res: Response) => {
       });
     }
 
+    if (findBook.image && findBook.image.includes('cloudinary')) {
+      try {
+        const publicId: any = findBook.image.split('/').pop()?.split('.')[0];
+        await cloudinary.uploader.destroy(publicId);
+      } catch (deleteError) {
+        console.log('Error deleting image from cloudinary', deleteError);
+      }
+    }
+
     await findBook.deleteOne();
     return res
       .status(200)
