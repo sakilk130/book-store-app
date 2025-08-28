@@ -5,8 +5,8 @@ import bookRoutes from './routes/book.routes';
 
 const app: Application = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/books', bookRoutes);
